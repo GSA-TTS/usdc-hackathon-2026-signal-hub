@@ -13,6 +13,26 @@ import {
 } from '@trussworks/react-uswds'
 import './App.css'
 
+// TODO: move this secret to a server-side service before production.
+// Client-side secrets are visible in the JS bundle, and SSNs have low
+// enough entropy (~1B combinations) to be brute-forced once the key is known.
+const SSN_HMAC_SECRET = 'replace-with-a-securely-managed-secret'
+
+async function createHmacDigest(secretKey, message) {
+  const encoder = new TextEncoder()
+  const cryptoKey = await crypto.subtle.importKey(
+    'raw',
+    encoder.encode(secretKey),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  )
+  const signature = await crypto.subtle.sign('HMAC', cryptoKey, encoder.encode(message))
+  return Array.from(new Uint8Array(signature))
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('')
+}
+
 function App() {
   const [formData, setFormData] = useState({
     agency: '',
@@ -22,7 +42,7 @@ function App() {
     digest: '',
     severity: '',
     fraudCategory: '',
-    confidence: '',
+    confidence: 3,
   })
 
   const handleSsnPartChange = (event) => {
@@ -42,9 +62,17 @@ function App() {
     }))
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    console.log('Form data submitted:', formData)
+
+    const ssn = `${formData.ssnPart1}${formData.ssnPart2}${formData.ssnPart3}`
+    const digest = await createHmacDigest(SSN_HMAC_SECRET, ssn)
+
+    const { ssnPart1, ssnPart2, ssnPart3, ...rest } = formData
+    const submission = { ...rest, digest }
+
+    setFormData((previous) => ({ ...previous, digest }))
+    console.log('Form data submitted:', submission)
   }
 
   return (
@@ -197,21 +225,32 @@ function App() {
                 </svg>
               </Tooltip> */}
             </Label>
-            <RangeInput
-              id="confidence"
-              name="confidence"
-              min={1}
-              max={5}
-              step={1}
-              list="confidence-ticks"
-              value={formData.confidence}
+            {/*
+              @trussworks/react-uswds's RangeInput manages its own internal
+              state and silently overrides any onChange prop passed to it, so
+              controlled value/onChange do not work directly on it. Instead,
+              we wrap it in a div and listen for the native 'input' event as
+              it bubbles up, since React's synthetic onChange still fires for
+              ancestor elements along the DOM path.
+            */}
+            <div
               onChange={(e) => {
                 setFormData((previous) => ({
                   ...previous,
                   confidence: Number(e.target.value),
                 }))
               }}
-            />
+            >
+              <RangeInput
+                id="confidence"
+                name="confidence"
+                min={1}
+                max={5}
+                step={1}
+                list="confidence-ticks"
+                defaultValue={formData.confidence}
+              />
+            </div>
             <datalist id="confidence-ticks">
               <option value="1" label="1" />
               <option value="2" label="2" />
