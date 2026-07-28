@@ -34,6 +34,7 @@ async function createHmacDigest(secretKey, message) {
 }
 
 function App() {
+  const [view, setView] = useState('landing')
   const [formData, setFormData] = useState({
     agency: '',
     ssnPart1: '',
@@ -75,6 +76,42 @@ function App() {
     console.log('Form data submitted:', submission)
   }
 
+  const handleAgencySubmit = (event) => {
+    event.preventDefault()
+    setView('form')
+  }
+
+  if (view === 'landing') {
+    return (
+      <GridContainer className="padding-y-8">
+        <main className="form-page">
+          <h1>Signal Hub</h1>
+          <h2>Select Your Agency</h2>
+          <p>Choose the agency you're reporting on behalf of to get started.</p>
+          <Form onSubmit={handleAgencySubmit} className="simple-form">
+            <div>
+              <Label htmlFor="agency">Agency</Label>
+              <Select
+                id="agency"
+                name="agency"
+                value={formData.agency}
+                onChange={handleChange}
+                required
+              >
+                <option value="">- Reporting Agency -</option>
+                <option value="sba">SBA</option>
+                <option value="ssa">SSA</option>
+                <option value="hud">HUD</option>
+              </Select>
+            </div>
+
+            <Button type="submit">Continue</Button>
+          </Form>
+        </main>
+      </GridContainer>
+    )
+  }
+
   return (
     <GridContainer className="padding-y-8">
       <main className="form-page">
@@ -83,23 +120,13 @@ function App() {
         <p>Report suspicious activity here to help identify cross-agency fraud patterns while maintaining total data security. Your submission is protected by our privacy-preserving model—identifiers are hashed locally before transmission, ensuring no raw PII is ever sent or stored.</p>
         <br />
         <p>Thank you for your work in breaking down agency silos to protect federal resources and the public we serve!</p>
+        <p className="agency-badge">
+          Reporting as: <strong>{formData.agency.toUpperCase()}</strong>{' '}
+          <Button type="button" unstyled onClick={() => setView('landing')}>
+            Change agency
+          </Button>
+        </p>
         <Form onSubmit={handleSubmit} className="simple-form">
-
-          <div>
-            <Label htmlFor="fraudCategory">Agency</Label>
-            <Select
-              id="agency"
-              name="agency"
-              value={formData.agency}
-              onChange={handleChange}
-              required
-            >
-              <option value="">- Reporting Agency -</option>
-              <option value="sba">SBA</option>
-              <option value="ssa">SSA</option>
-              <option value="hud">HUD</option>
-            </Select>
-          </div>
 
           <div>
             <Fieldset legend="Social Security Number" className="ssn-fieldset">

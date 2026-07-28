@@ -18,6 +18,13 @@
   font-size: 28px;
 }
 
+.agency-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0;
+}
+
 .simple-form {
   display: flex;
   flex-direction: column;
