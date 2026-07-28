@@ -1,3 +1,8 @@
+.grid-container.padding-y-8 {
+  max-width: 100%;
+  /* Or a higher rem value like 80rem */
+}
+
 .form-page {
   width: 100%;
   margin: 0 auto;
@@ -30,8 +35,4 @@
   cursor: pointer;
 }
 
-@media (max-width: 1024px) {
-  .form-page {
-    padding: 0px;
-  }
-}
+@media (max-width: 1024px) {}
