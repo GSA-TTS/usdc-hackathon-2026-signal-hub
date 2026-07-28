@@ -1,4 +1,6 @@
 # {{ cookiecutter.project_name }}
+> [!IMPORTANT]
+> This is an exploratory project for the USDC 2026 Onsite Hackathon.
 
 {{ cookiecutter.project_description }}
 
