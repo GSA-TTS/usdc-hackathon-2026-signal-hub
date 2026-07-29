@@ -25,6 +25,39 @@
   margin: 16px 0;
 }
 
+.app-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #ddd;
+}
+
+.app-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.usa-table {
+  width: 100%;
+}
+
+.confidence-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.confidence-info-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+
 .simple-form {
   display: flex;
   flex-direction: column;
