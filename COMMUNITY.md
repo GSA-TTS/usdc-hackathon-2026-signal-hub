@@ -17,7 +17,7 @@ Roles to include, but not limited to: Project Owner, Technical Lead, Developers/
 | Cybersecurity Specialist Fellow | Jock Croft | USDC, CISA |
 | Data Science Fellow | Lylybell Teran | USDC, VA |
 | Data Science Fellow | Griffin Milas | USDC, CISA |
-| Fellow | Name | Agency |
+| Product Design Fellow | Eva Dransfield | USDC, CISA |
 
 <!-- TODO: A CODEOWNERS.md file is available in .github to define individuals responsible for specific parts of the codebase. Provide a reference to this file if used:
 
