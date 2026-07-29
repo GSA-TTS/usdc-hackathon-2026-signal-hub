@@ -14,6 +14,7 @@ Roles to include, but not limited to: Project Owner, Technical Lead, Developers/
 | Software Engineer Fellow | Anusha Prasad | USDC, DoS | 
 | Cybersecurity Specialist Fellow | Brey Warren | USDC, CMS |
 | Software Engineer Fellow | Ella Grady | USDC, USGS |
+| Data Science Fellow | Lylybell Teran | USDC, VA |
 | Data Science Fellow | Griffin Milas | USDC, CISA |
 | Fellow | Name | Agency |
 
