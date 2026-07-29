@@ -34,6 +34,7 @@ def get_alerts() -> list[dict[str, object]]:
                 "fraudId": alert.fraud_id,
                 "agencyCt": alert.agency_ct,
                 "reportCt": len(alert.report_ids or []),
+                "alertDate": alert.alert_date.strftime("%Y-%m-%d %H:%M"),
             }
             for alert in alerts
         ]
