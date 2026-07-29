@@ -2,6 +2,7 @@ from pathlib import Path
 from datetime import datetime, timezone
 from typing import List
 
+from sqlalchemy import inspect, text
 from sqlmodel import Field, SQLModel, Session, create_engine, Relationship, Column, JSON
 
 DB_PATH = Path(__file__).resolve().parent / "shared_signals.db"
@@ -37,7 +38,10 @@ class Signal(SQLModel, table=True):
     fraud_id: int | None = Field(default=None, foreign_key="fraud_id.id")
     agency_id: int | None = Field(default=None, foreign_key="agency.id")
     severity: str
+    confidence: str
     primary_category: str
+    # NOT NEEDED? signal_type: str
+    report_date: datetime | None = Field(default=None)
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
     fraud: FraudID | None = Relationship()  # SQLModel relationship stub
@@ -59,6 +63,14 @@ class Alerts(SQLModel, table=True):
 
 def create_db_and_tables() -> None:
     SQLModel.metadata.create_all(engine)
+
+    with engine.begin() as connection:
+        inspector = inspect(connection)
+        if "signal" in inspector.get_table_names():
+            columns = {column["name"] for column in inspector.get_columns("signal")}
+            if "report_date" not in columns:
+                connection.execute(text("ALTER TABLE signal ADD COLUMN report_date DATETIME"))
+
     print(f"Database created at: {DB_PATH}")
 
 

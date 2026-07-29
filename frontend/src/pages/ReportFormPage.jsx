@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import {
     Button,
-    DatePicker,
     Fieldset,
     Form,
     Icon,
@@ -43,7 +42,10 @@ function ReportFormPage() {
         severity: '',
         fraudCategory: '',
         confidence: '',
+        report_date: '',
     })
+    const [submissionStatus, setSubmissionStatus] = useState('idle')
+    const [submissionMessage, setSubmissionMessage] = useState('')
 
     const handleSsnPartChange = (event) => {
         const { name, value, maxLength } = event.target
@@ -64,15 +66,42 @@ function ReportFormPage() {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
+        setSubmissionStatus('submitting')
+        setSubmissionMessage('Saving your report...')
 
-        const ssn = `${formData.ssnPart1}${formData.ssnPart2}${formData.ssnPart3}`
-        const digest = await createHmacDigest(SSN_HMAC_SECRET, ssn)
+        try {
+            const ssn = `${formData.ssnPart1}${formData.ssnPart2}${formData.ssnPart3}`
+            const digest = await createHmacDigest(SSN_HMAC_SECRET, ssn)
 
-        const { ssnPart1, ssnPart2, ssnPart3, ...rest } = formData
-        const submission = { agency, ...rest, digest }
+            const { ssnPart1, ssnPart2, ssnPart3, report_date, ...rest } = formData
+            const submission = {
+                agency,
+                ...rest,
+                digest,
+                ...(report_date ? { report_date: new Date(`${report_date}T00:00:00`).toISOString() } : {}),
+            }
 
-        setFormData((previous) => ({ ...previous, digest }))
-        console.log('Form data submitted:', submission)
+            const response = await fetch('/api/reports', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(submission),
+            })
+
+            if (!response.ok) {
+                throw new Error('Unable to save report')
+            }
+
+            const result = await response.json()
+            setFormData((previous) => ({ ...previous, digest }))
+            setSubmissionStatus('success')
+            setSubmissionMessage(`Report saved successfully. Signal ID: ${result.signalId}`)
+            console.log('Form data submitted:', submission)
+        } catch (error) {
+            setSubmissionStatus('error')
+            setSubmissionMessage(error.message || 'Something went wrong while saving the report.')
+        }
     }
 
     return (
@@ -146,11 +175,14 @@ function ReportFormPage() {
                 >
                     mm/dd/yyyy
                 </div>
-                <DatePicker
+                <TextInput
                     aria-describedby="incident-date-hint"
                     aria-labelledby="incident-date-label"
                     id="incident-date"
-                    name="incident-date"
+                    name="report_date"
+                    type="date"
+                    value={formData.report_date}
+                    onChange={handleChange}
                 />
 
                 <div>
@@ -269,6 +301,12 @@ function ReportFormPage() {
                         tile
                     />
                 </Fieldset>
+                {submissionStatus !== 'idle' && (
+                    <p role="status" className={submissionStatus === 'success' ? 'text-success' : 'text-error'}>
+                        {submissionMessage}
+                    </p>
+                )}
+
                 <Button type="submit">Submit</Button>
             </Form>
         </div>
