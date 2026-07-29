@@ -10,14 +10,15 @@ Roles to include, but not limited to: Project Owner, Technical Lead, Developers/
 
 | Role   | Name    | Affiliation    |
 | :----- | :------ | :------------- |
-| Software Engineer Fellow | Natalia Luzuriaga | USDC, CMS |
-| Software Engineer Fellow | Anusha Prasad | USDC, DoS | 
-| Cybersecurity Specialist Fellow | Brey Warren | USDC, CMS |
-| Software Engineer Fellow | Ella Grady | USDC, USGS |
-| Cybersecurity Specialist Fellow | Jock Croft | USDC, CISA |
-| Data Science Fellow | Lylybell Teran | USDC, VA |
-| Data Science Fellow | Griffin Milas | USDC, CISA |
-| Product Design Fellow | Eva Dransfield | USDC, CISA |
+| Software Engineer | Natalia Luzuriaga | USDC, CMS |
+| Software Engineer | Anusha Prasad | USDC, DoS | 
+| Cybersecurity Specialist| Brey Warren | USDC, CMS |
+| Software Engineer | Ella Grady | USDC, USGS |
+| Cybersecurity Specialist | Jock Croft | USDC, CISA |
+| Data Scientist | Lylybell Teran | USDC, VA |
+| Data Scientist| Griffin Milas | USDC, CISA |
+| Product Designer | Eva Dransfield | USDC, CISA |
+| Product Manager | Zïa Maldonado | USDC, CISA |
 
 <!-- TODO: A CODEOWNERS.md file is available in .github to define individuals responsible for specific parts of the codebase. Provide a reference to this file if used:
 
