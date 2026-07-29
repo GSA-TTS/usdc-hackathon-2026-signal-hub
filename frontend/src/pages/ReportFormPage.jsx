@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useOutletContext } from 'react-router-dom'
+import { Link, useOutletContext } from 'react-router-dom'
 import {
     Button,
     Fieldset,
@@ -46,6 +46,8 @@ function ReportFormPage() {
     })
     const [submissionStatus, setSubmissionStatus] = useState('idle')
     const [submissionMessage, setSubmissionMessage] = useState('')
+    const [showMatchModal, setShowMatchModal] = useState(false)
+    const [matchSummary, setMatchSummary] = useState(null)
 
     const handleSsnPartChange = (event) => {
         const { name, value, maxLength } = event.target
@@ -96,7 +98,16 @@ function ReportFormPage() {
             const result = await response.json()
             setFormData((previous) => ({ ...previous, digest }))
             setSubmissionStatus('success')
-            setSubmissionMessage(`Report saved successfully. Signal ID: ${result.signalId}`)
+            if (result.alertId) {
+                setMatchSummary({
+                    agencies: result.agencyCount || 0,
+                    reports: result.reportCount || 0,
+                })
+                setShowMatchModal(true)
+                setSubmissionMessage(`Report saved successfully. Signal ID: ${result.signalId}`)
+            } else {
+                setSubmissionMessage(`Report saved successfully. Signal ID: ${result.signalId}`)
+            }
             console.log('Form data submitted:', submission)
         } catch (error) {
             setSubmissionStatus('error')
@@ -305,6 +316,23 @@ function ReportFormPage() {
                     <p role="status" className={submissionStatus === 'success' ? 'text-success' : 'text-error'}>
                         {submissionMessage}
                     </p>
+                )}
+
+                {showMatchModal && matchSummary && (
+                    <div className="usa-modal-wrapper" role="dialog" aria-modal="true" aria-labelledby="match-modal-title">
+                        <div className="usa-modal" style={{ display: 'block', position: 'relative', padding: '1rem' }}>
+                            <h3 id="match-modal-title">Match found</h3>
+                            <p>
+                                Match found at {matchSummary.agencies} agencies in {matchSummary.reports} reports.
+                            </p>
+                            <Link to="/alerts-log" className="usa-button usa-button--outline">
+                                View more details
+                            </Link>
+                            <Button type="button" className="margin-left-1" onClick={() => setShowMatchModal(false)}>
+                                Close
+                            </Button>
+                        </div>
+                    </div>
                 )}
 
                 <Button type="submit">Submit</Button>

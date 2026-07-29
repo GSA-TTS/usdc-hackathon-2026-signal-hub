@@ -44,6 +44,7 @@ function HomePage() {
           <thead>
             <tr>
               <th scope="col">Report ID</th>
+              <th scope="col">Fraud ID</th>
               <th scope="col">Agency</th>
               <th scope="col">Fraud Category</th>
               <th scope="col">Severity</th>
@@ -55,6 +56,7 @@ function HomePage() {
             {reports.map((report) => (
               <tr key={report.id}>
                 <td>{report.id}</td>
+                <td>{report.fraudId}</td>
                 <td>{report.agency}</td>
                 <td>{report.fraudCategory}</td>
                 <td>{report.severity}</td>

@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage'
 import ReportFormPage from './pages/ReportFormPage'
 import CreateWebhookPage from './pages/CreateWebhookPage'
 import ViewIdTablePage from './pages/ViewIdTablePage'
+import AlertsLogPage from './pages/AlertsLogPage'
 import './App.css'
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/form" element={<ReportFormPage />} />
         <Route path="/webhook" element={<CreateWebhookPage />} />
-        <Route path="/id-table" element={<ViewIdTablePage />} />
+        <Route path="/alerts-log" element={<AlertsLogPage />} />
       </Route>
     </Routes>
   )

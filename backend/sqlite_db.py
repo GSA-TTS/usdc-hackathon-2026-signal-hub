@@ -20,6 +20,8 @@ class FraudID(SQLModel, table=True):
 
     id: int | None = Field(default=None, primary_key=True)
     ssn: str
+    agency_ct: int | None = Field(default=1)
+    report_ct: int | None = Field(default=1)
 
 
 class Agency(SQLModel, table=True):
@@ -38,7 +40,7 @@ class Signal(SQLModel, table=True):
     fraud_id: int | None = Field(default=None, foreign_key="fraud_id.id")
     agency_id: int | None = Field(default=None, foreign_key="agency.id")
     severity: str
-    confidence: str
+    confidence: str | None = Field(default=None)
     primary_category: str
     # NOT NEEDED? signal_type: str
     report_date: datetime | None = Field(default=None)

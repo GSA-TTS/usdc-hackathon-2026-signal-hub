@@ -17,10 +17,16 @@ function NavBar({ agency, onChangeAgency }) {
           Create Webhook
         </NavLink>
         <NavLink
-          to="/id-table"
+          to="/home"
           className={({ isActive }) => `usa-button${isActive ? '' : ' usa-button--outline'}`}
         >
-          View ID Table
+          Submitted Reports
+        </NavLink>
+        <NavLink
+          to="/alerts-log"
+          className={({ isActive }) => `usa-button${isActive ? '' : ' usa-button--outline'}`}
+        >
+          Alerts Log
         </NavLink>
       </div>
 
