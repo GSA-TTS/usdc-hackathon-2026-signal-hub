@@ -11,6 +11,7 @@ Roles to include, but not limited to: Project Owner, Technical Lead, Developers/
 | Role   | Name    | Affiliation    |
 | :----- | :------ | :------------- |
 | Software Engineer Fellow | Natalia Luzuriaga | USDC, CMS |
+| Software Engineer Fellow | Anusha Prasad | USDC, DoS | 
 | Fellow | Name | Agency |
 
 <!-- TODO: A CODEOWNERS.md file is available in .github to define individuals responsible for specific parts of the codebase. Provide a reference to this file if used:
