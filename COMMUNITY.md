@@ -12,6 +12,7 @@ Roles to include, but not limited to: Project Owner, Technical Lead, Developers/
 | :----- | :------ | :------------- |
 | Software Engineer Fellow | Natalia Luzuriaga | USDC, CMS |
 | Software Engineer Fellow | Ella Grady | USDC, USGS |
+| Data Science Fellow | Griffin Milas | USDC, CISA |
 | Fellow | Name | Agency |
 
 <!-- TODO: A CODEOWNERS.md file is available in .github to define individuals responsible for specific parts of the codebase. Provide a reference to this file if used:
