@@ -4,7 +4,6 @@ import {
     Button,
     Fieldset,
     Form,
-    Icon,
     Label,
     Radio,
     Select,
@@ -264,12 +263,11 @@ function ReportFormPage() {
                     legend={
                         <span className="confidence-legend-row">
                             Confidence Level
-                            <Icon.InfoOutline aria-hidden="true" className="confidence-info-icon" />
                         </span>
                     }
                     className="confidence-fieldset"
                 >
-                    <p className="usa-hint">Indicates the level of certainty that the reported signal represents actual fraudulent activity.</p>
+                    
                     <Radio
                         id="confidence-low"
                         name="confidence"
