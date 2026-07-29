@@ -11,6 +11,7 @@ Roles to include, but not limited to: Project Owner, Technical Lead, Developers/
 | Role   | Name    | Affiliation    |
 | :----- | :------ | :------------- |
 | Software Engineer Fellow | Natalia Luzuriaga | USDC, CMS |
+| Software Engineer Fellow | Anusha Prasad | USDC, DoS | 
 | Cybersecurity Specialist Fellow | Brey Warren | USDC, CMS |
 | Software Engineer Fellow | Ella Grady | USDC, USGS |
 | Fellow | Name | Agency |
